@@ -16,9 +16,10 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 interface SettingsScreenProps {
   onBack: () => void;
   onLogout: () => void;
+  onOpenScheduleConfig?: () => void;
 }
 
-export const SettingsScreen: React.FC<SettingsScreenProps> = ({ onBack, onLogout }) => {
+export const SettingsScreen: React.FC<SettingsScreenProps> = ({ onBack, onLogout, onOpenScheduleConfig }) => {
   const [userSettings, setUserSettings] = useState({
     name: 'Dr. João Silva',
     email: 'joao.silva@multiplossorriso.com',
@@ -152,7 +153,7 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = ({ onBack, onLogout
 
               {userSettings.role === 'dentista' && (
                 <>
-                  <TouchableOpacity style={styles.optionItem}>
+                  <TouchableOpacity style={styles.optionItem} onPress={onOpenScheduleConfig}>
                     <View style={styles.optionLeft}>
                       <View style={styles.optionIcon}>
                         <MaterialCommunityIcons name="calendar-edit" size={24} color="#3B82F6" />

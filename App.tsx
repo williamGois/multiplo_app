@@ -5,8 +5,16 @@ import { HomeScreen } from './src/screens/HomeScreen';
 import { SettingsScreen } from './src/screens/SettingsScreen';
 import { AgendaScreen } from './src/screens/AgendaScreen';
 import { PatientsScreen } from './src/screens/PatientsScreen';
+import { ScheduleConfigScreen } from './src/screens/ScheduleConfigScreen';
 
-type Screen = 'login' | 'register' | 'home' | 'settings' | 'agenda' | 'patients';
+type Screen =
+  | 'login'
+  | 'register'
+  | 'home'
+  | 'settings'
+  | 'agenda'
+  | 'patients'
+  | 'scheduleConfig';
 
 export default function App() {
   const [currentScreen, setCurrentScreen] = useState<Screen>('login');
@@ -59,6 +67,7 @@ export default function App() {
           <SettingsScreen
             onBack={handleBack}
             onLogout={handleLogout}
+            onOpenScheduleConfig={() => setCurrentScreen('scheduleConfig')}
           />
         );
       case 'agenda':
@@ -70,6 +79,12 @@ export default function App() {
       case 'patients':
         return (
           <PatientsScreen
+            onBack={handleBack}
+          />
+        );
+      case 'scheduleConfig':
+        return (
+          <ScheduleConfigScreen
             onBack={handleBack}
           />
         );
