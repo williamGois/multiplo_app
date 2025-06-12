@@ -1,24 +1,93 @@
 import React, { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
-import OnboardingScreen from './src/screens/OnboardingScreen';
-import LoginScreen from './src/screens/LoginScreen';
+import { SimpleLoginScreen } from './src/screens/SimpleLoginScreen';
+import { SimpleRegisterScreen } from './src/screens/SimpleRegisterScreen';
+import { HomeScreen } from './src/screens/HomeScreen';
+import { SettingsScreen } from './src/screens/SettingsScreen';
+import { AgendaScreen } from './src/screens/AgendaScreen';
+import { PatientsScreen } from './src/screens/PatientsScreen';
+
+type Screen = 'login' | 'register' | 'home' | 'settings' | 'agenda' | 'patients';
 
 export default function App() {
-  const [showLogin, setShowLogin] = useState(false);
+  const [currentScreen, setCurrentScreen] = useState<Screen>('login');
+
+  const handleLogin = (email: string, password: string) => {
+    setCurrentScreen('home');
+  };
+
+  const handleRegister = (userData: any) => {
+    setCurrentScreen('home');
+  };
+
+  const handleLogout = () => {
+    setCurrentScreen('login');
+  };
+
+  const handleNavigate = (screen: string) => {
+    setCurrentScreen(screen as Screen);
+  };
+
+  const handleBack = () => {
+    setCurrentScreen('home');
+  };
+
+  const renderScreen = () => {
+    switch (currentScreen) {
+      case 'login':
+        return (
+          <SimpleLoginScreen
+            onLogin={handleLogin}
+            onNavigateToRegister={() => setCurrentScreen('register')}
+          />
+        );
+      case 'register':
+        return (
+          <SimpleRegisterScreen
+            onRegister={handleRegister}
+            onNavigateToLogin={() => setCurrentScreen('login')}
+          />
+        );
+      case 'home':
+        return (
+          <HomeScreen
+            onLogout={handleLogout}
+            onNavigate={handleNavigate}
+          />
+        );
+      case 'settings':
+        return (
+          <SettingsScreen
+            onBack={handleBack}
+            onLogout={handleLogout}
+          />
+        );
+      case 'agenda':
+        return (
+          <AgendaScreen
+            onBack={handleBack}
+          />
+        );
+      case 'patients':
+        return (
+          <PatientsScreen
+            onBack={handleBack}
+          />
+        );
+      default:
+        return (
+          <SimpleLoginScreen
+            onLogin={handleLogin}
+            onNavigateToRegister={() => setCurrentScreen('register')}
+          />
+        );
+    }
+  };
 
   return (
-    <View style={styles.container}>
-      {showLogin ? (
-        <LoginScreen />
-      ) : (
-        <OnboardingScreen onFinish={() => setShowLogin(true)} />
-      )}
-    </View>
+    <>
+      {renderScreen()}
+    </>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
+

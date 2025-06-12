@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Image, FlatList, Dimensions, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image, FlatList, Dimensions, TouchableOpacity, StatusBar } from 'react-native';
 import * as Notifications from 'expo-notifications';
-import { StatusBar } from 'expo-status-bar';
 
 const images = [
   require('../../assets/splash-icon.png'),
@@ -30,7 +29,7 @@ export default function OnboardingScreen({ onFinish }: { onFinish: () => void })
 
   return (
     <View style={styles.container}>
-      <StatusBar style="light" translucent />
+      <StatusBar barStyle="light-content" backgroundColor="#e0f0ff" />
       <FlatList
         data={images}
         horizontal
